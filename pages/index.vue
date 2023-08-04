@@ -1,8 +1,7 @@
-import { OrganismsHeader, OrganismsEmpForm, OrganismsEmpList } from '../.nuxt/components';
 <template>
-  <div class="flex flex-wrap bg-[#F2F1FA]">
+  <div class="flex flex-wrap dark:bg-[#0C060E]">
     <div
-      class="flex flex-col items-center w-1/12 rounded-tr-[25px] rounded-br-[25px] bg-[#702f61] justify-center overflow-auto"
+      class="flex flex-col items-center w-1/12 rounded-tr-[25px] rounded-br-[25px] bg-[#702f61] dark:bg-[#271225] justify-center overflow-auto"
     >
       <OrganismsAppSidebar />
     </div>
@@ -17,3 +16,4 @@ import { OrganismsHeader, OrganismsEmpForm, OrganismsEmpList } from '../.nuxt/co
     </div>
   </div>
 </template>
+

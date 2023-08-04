@@ -1,12 +1,14 @@
 <template>
   <div class="flex justify-between">
     <div class="">
-      <p class="text-[35px] font-bold text-left text-[#4a4a4a]">
+      <p class="text-[35px] font-bold text-left text-[#4a4a4a] dark:text-white">
         Employee Master
       </p>
     </div>
-    <div class="flex gap-2">
-      <p class="text-[19px] font-medium text-left text-black">Switch Themes</p>
+    <div class="flex gap-2 cursor-pointer" @click="handletheme">
+      <p class="text-[19px] font-medium text-left text-black dark:text-white">
+        Switch Themes
+      </p>
       <svg
         width="40"
         height="40"
@@ -24,3 +26,11 @@
     </div>
   </div>
 </template>
+<script setup>
+const colorMode = useColorMode();
+function handletheme() {
+  colorMode.preference === "dark"
+    ? (colorMode.preference = "light")
+    : (colorMode.preference = "dark");
+}
+</script>

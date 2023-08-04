@@ -1,18 +1,24 @@
 import import { UnwrapRef from 'vue';
 <template>
   <div
-    class="w-full md:w-1/2 rounded-[29px] bg-white border border-[#e1e1e1]"
+    class="w-full md:w-1/2 rounded-[29px] bg-white border border-[#e1e1e1] dark:border-[#100d14] dark:bg-[#100d14]"
     style="box-shadow: 0px 2px 9px 1px rgba(0, 0, 0, 0.08)"
   >
     <div class="m-12">
       <!-- form heading -->
       <div class="flex justify-between">
         <div>
-          <p class="text-2xl font-bold text-left text-[#4a4a4a]">
+          <p
+            class="text-2xl font-bold text-left text-[#4a4a4a] dark:text-white"
+          >
             Employee Info
           </p>
         </div>
-        <div class="flex items-center">
+        <div
+          v-show="userdata?.editable"
+          class="flex items-center cursor-pointer"
+          @click="handleEditButton"
+        >
           <svg
             width="24"
             height="24"
@@ -28,7 +34,7 @@ import import { UnwrapRef from 'vue';
             ></path>
           </svg>
           <p
-            class="w-[49px] text-[22px] font-bold text-center text-[#42403a] pl-2"
+            class="w-[49px] text-[22px] font-bold text-center text-[#42403a] pl-2 dark:text-white"
           >
             EDIT
           </p>
@@ -38,30 +44,38 @@ import import { UnwrapRef from 'vue';
         <div class="mt-10">
           <input
             v-model="userdata.display_name"
-            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full"
+            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full dark:bg-[#100d14] dark:placeholder-white dark:text-white"
             placeholder="Display Name"
             required
+            :disabled="canEdit"
           />
         </div>
         <div class="pt-3">
           <input
             v-model="userdata.login_id"
-            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full"
+            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full dark:bg-[#100d14] dark:placeholder-white dark:text-white"
             placeholder="Login Id"
             required
+            :disabled="canEdit"
           />
         </div>
         <div class="pt-3">
           <input
+            type="password"
             v-model="userdata.password"
-            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full"
+            class="h-16 rounded-lg border border-[#e9e9e9] block p-2.5 w-full dark:bg-[#100d14] dark:placeholder-white dark:text-white"
             placeholder="Password"
             required
+            :disabled="canEdit"
           />
         </div>
         <div class="flex justify-between mt-3">
           <div>
-            <p class="text-xl font-bold text-left text-[#4a4a4a]">Status</p>
+            <p
+              class="text-xl font-bold text-left text-[#4a4a4a] dark:text-white"
+            >
+              Status
+            </p>
           </div>
           <div>
             <label
@@ -72,7 +86,7 @@ import import { UnwrapRef from 'vue';
                 type="checkbox"
                 :value="userdata.is_active"
                 class="sr-only peer"
-                required
+                :disabled="canEdit"
               />
               <div
                 class="w-11 h-5 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-[#702F61] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-gray-300 after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all dark:border-gray-600 peer-checked:bg-[#702F61]"
@@ -88,8 +102,9 @@ import import { UnwrapRef from 'vue';
           <button
             class="bg-[#702F61] text-white rounded-[24px] px-20 py-1.5 text-center font-bold"
             type="submit"
+            :disabled="canEdit"
           >
-            Save
+            {{ userdata?.editable ? "Edit" : "Save" }}
           </button>
         </div>
       </form>
@@ -99,17 +114,23 @@ import import { UnwrapRef from 'vue';
 <script setup>
 import { ref } from "vue";
 
-let userdata = ref({
-  display_name: "",
-  login_id: "",
-  password: "",
-  is_active: false,
-  user_image:
-    "https://robohash.org/officiisvoluptatemdoloremque.png?size=50x50&set=set1",
-});
-function handlesave(e) {
+const store = useUserStore();
+const userdata = computed(() => store.initialUserFormData);
+const canEdit = ref(false);
+async function handlesave(e) {
   e.preventDefault();
-  e.target.formData;
-  console.log("---", userdata);
+  if (userdata?.value.editable) {
+    await store.updateUser(userdata);
+  } else {
+    await store.addUser(userdata);
+  }
+  await store.resetUserForm();
+  canEdit.value = false;
+}
+watch(userdata, () => {
+  canEdit.value = true;
+});
+function handleEditButton() {
+  canEdit.value = !canEdit.value;
 }
 </script>

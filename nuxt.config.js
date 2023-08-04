@@ -7,4 +7,16 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  modules: [
+    // ...
+    "@pinia/nuxt",
+    "@nuxtjs/color-mode",
+  ],
+  imports: {
+    dirs: ["./stores"],
+  },
+
+  pinia: {
+    autoImports: ["defineStore", "acceptHMRUpdate"],
+  },
 });
