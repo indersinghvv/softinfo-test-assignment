@@ -1,22 +1,18 @@
-import { AppHeader } from '../.nuxt/components';
+import { OrganismsHeader, OrganismsEmpForm, OrganismsEmpList } from '../.nuxt/components';
 <template>
-  <div class="flex flex-wrap">
+  <div class="flex flex-wrap bg-[#F2F1FA]">
     <div
-      class="flex flex-col items-center w-1/6 h-screen gap-6 rounded-tr-[25px] rounded-br-[25px] bg-[#702f61]"
+      class="flex flex-col items-center w-1/12 rounded-tr-[25px] rounded-br-[25px] bg-[#702f61] justify-center overflow-auto"
     >
-      <AppHeader class="mt-6" />
-      <AppHeader />
-      <AppHeader />
+      <OrganismsAppSidebar />
     </div>
-    <div class="w-5/6 bg-slate-500 flex flex-col">
+    <!-- main content -->
+    <div class="w-11/12 flex flex-col p-2 md:p-4">
       <!-- header -->
-      <div class="flex justify-between">
-        <div class="">06</div>
-        <div>07</div>
-      </div>
-      <div class="flex flex-col md:flex-row justify-between">
-        <div>08</div>
-        <div>09</div>
+      <OrganismsHeader />
+      <div class="flex flex-col md:flex-row justify-between gap-8 pt-10">
+        <OrganismsEmpForm />
+        <OrganismsEmpList />
       </div>
     </div>
   </div>

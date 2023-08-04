@@ -1,0 +1,37 @@
+[
+    {
+    "id": 1,
+    "name": "Dashboard",
+    "icon": "1.svg"
+  },
+    {
+    "id": 1,
+    "name": "Products & modules",
+    "icon": "2.svg"
+  },
+    {
+    "id": 1,
+    "name": "Users",
+    "icon": "3.svg"
+  },
+    {
+    "id": 1,
+    "name": "Registration",
+    "icon": "4.svg"
+  },
+    {
+    "id": 1,
+    "name": "Invoice",
+    "icon": "5.svg"
+  },
+    {
+    "id": 1,
+    "name": "Payments",
+    "icon": "6.svg"
+  },
+    {
+    "id": 1,
+    "name": "Approve",
+    "icon": "7.svg"
+  }
+]
